@@ -81,6 +81,20 @@ td {
     padding: 0.3em 0;
 }
 
+.balance {
+    width: 210px;
+    font-size: 1.2em;
+}
+
+.balance>span{
+    color:#811;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a {
+    color: black;
+}
+
 /*!
  * animate.css -http://daneden.me/animate
  * Version - 3.7.0
