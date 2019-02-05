@@ -4,7 +4,7 @@
     Layout = "_Layout";
 }
 <h1>Lucky Spin</h1>
-<h2>Pick your Number</h2>
+<h2>Player Info</h2>
 <form asp-action="Index" asp-controller="Spinner">
     <fieldset>
         <label>
@@ -26,6 +26,10 @@
             </select>
             <span asp-validation-for="Luck"></span>
         </label>
+        <label>
+            <input placeholder=" Beginning Balance" /> <!-- TODO: Connect this to your model's balance property -->
+        </label>
+        <span></span>
     </fieldset>
     <input type="submit" value="Start the Game" />
 </form>

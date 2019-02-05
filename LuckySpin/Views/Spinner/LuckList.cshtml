@@ -1,15 +1,14 @@
-﻿@model IEnumerable<LuckySpin.Models.Spin>
+﻿@model IEnumerable<LuckySpin.Models.Spin> 
+<!-- TODO: Change this to the ViewModel-->
 @{
     Layout = "_Layout";
 }
 <h1>All Your Luck</h1>
 <table>
-    <thead><tr><th>Luck</th><th>Result</th></tr></thead>
+    <thead><tr><th>Spin #</th><th>Result</th><th>Balance</th></tr></thead>
     <tbody>
         @foreach( LuckySpin.Models.Spin spin in @Model ){
-            <tr><td>@spin.Luck</td><td>@spin.IsWinning</td></tr>
+            <tr><td> </td> <td> </td> <td> </td></tr>
         }
     </tbody>
-
-
 </table>

@@ -9,15 +9,16 @@ namespace LuckySpin.Controllers
 {
     public class SpinnerController : Controller
     {
-        private Repository repository;
-        Random random = new Random();
+        private LuckySpinDataContext _dbc;
+        Random random;
 
         /***
          * Controller Constructor
          */
-        public SpinnerController(Repository r)
+        public SpinnerController()
         {
-            repository = r;
+            random = new Random();
+            //TODO: Inject the LuckySpinDataContext
         }
 
         /***
@@ -33,20 +34,24 @@ namespace LuckySpin.Controllers
         [HttpPost]
         public IActionResult Index(Player player)
         {
-            if(ModelState.IsValid)
-                return RedirectToAction("SpinIt", player);
-            return View();
+            if (!ModelState.IsValid) { return View(); }
+
+            // TODO: Add the Player to the DB and save the changes
+
+            // TODO: BONUS: Build a new SpinItViewModel object with data from the Player and pass it to the View
+
+            return RedirectToAction("SpinIt");
         }
 
         /***
          * Spin Action
          **/  
                
-         public IActionResult SpinIt(Player player)
+         public IActionResult SpinIt()
         {
             Spin spin = new Spin
             {
-                Luck = player.Luck,
+                //Luck = player.Luck,
                 A = random.Next(1, 10),
                 B = random.Next(1, 10),
                 C = random.Next(1, 10)
@@ -55,7 +60,7 @@ namespace LuckySpin.Controllers
             spin.IsWinning = (spin.A == spin.Luck || spin.B == spin.Luck || spin.C == spin.Luck);
 
             //Add to Spin Repository
-            repository.AddSpin(spin);
+            //repository.AddSpin(spin);
 
             //Prepare the View
             if(spin.IsWinning)
@@ -63,7 +68,7 @@ namespace LuckySpin.Controllers
             else
                 ViewBag.Display = "none";
 
-            ViewBag.FirstName = player.FirstName;
+            //ViewBag.FirstName = player.FirstName;
 
             return View("SpinIt", spin);
         }
@@ -74,7 +79,7 @@ namespace LuckySpin.Controllers
 
          public IActionResult LuckList()
         {
-                return View(repository.PlayerSpins);
+                return View();
         }
 
     }
