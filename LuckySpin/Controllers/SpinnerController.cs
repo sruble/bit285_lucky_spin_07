@@ -42,38 +42,52 @@ namespace LuckySpin.Controllers
             _dbc.Players.Add(player);
             _dbc.SaveChanges();
 
-            //Build a new SpinItViewModel object with data from the Player and pass it to the View
-            SpinViewModel spinVM = new SpinViewModel()
+            /* **
+             * No longer needed - use an int instead
+             *             
+             SpinViewModel spinVM = new SpinViewModel()
             {
                 PlayerId = player.Id,
                 FirstName = player.FirstName,
                 Balance = player.Balance,
                 Luck = player.Luck
             };
+            */
 
-            return RedirectToAction("SpinIt", spinVM);
+            //TODO: only pass the player.Id to the SpinIt action
+            return RedirectToAction("SpinIt");
         }
 
         /***
-         * Spin Action
+         * SpinIt Action
          **/  
                
-         public IActionResult SpinIt(SpinViewModel spinVM)
+         public IActionResult SpinIt() //TODO: change parameter to receive players Id
         {
-            spinVM.A = random.Next(1, 10);
-            spinVM.B = random.Next(1, 10);
-            spinVM.C = random.Next(1, 10);
+            //TODO: Get the player with the given Id using the Players DbSet Find(Id) method
+
+
+            //TODO: Build a new SpinItViewModel object with data from the Player and spin
+            SpinViewModel spinVM = new SpinViewModel()
+            {
+                A = random.Next(1, 10),
+                B = random.Next(1, 10),
+                C = random.Next(1, 10)
+
+            };
+
             spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
 
-            //Prepare the View
+            //Prepare the ViewBag
             if(spinVM.IsWinning)
                 ViewBag.Display = "block";
             else
                 ViewBag.Display = "none";
+            //TODO Add an item called ViewBag.PlayerId that assigns the LuckList link a route_id in the View
+            //      (see the <a href> for "Current Balance" in the SpinIt.cshtml file)
 
-            ViewBag.PlayerId = spinVM.PlayerId;
 
-            //TODO: Add a new Spin object to the Database
+            //TODO CHANGE THIS to add the new Spin to the __Players__ spin list
             _dbc.Spins.Add(new Spin() { IsWinning = spinVM.IsWinning });
             _dbc.SaveChanges();
 
@@ -84,10 +98,13 @@ namespace LuckySpin.Controllers
          * ListSpins Action
          **/
 
-         public IActionResult LuckList()
+         public IActionResult LuckList(int id)
         {
-            //TODO: get all the spins from the Database and pass it as an IEnumerable<Spin> to the View
-                return View();
+            //TODO: get all the spins for the given Player from the Database
+
+
+            //TODO: wrap each spin as an IEnumerable and send to the View
+            return View();
         }
 
     }

@@ -9,8 +9,10 @@
 <div>@Model.A</div><div>@Model.B</div><div>@Model.C</div>
 <h1> Lucky @Transform.numberToText(Model.Luck) </h1>
 <div class="balance">
-    <a asp-action="LuckList" asp-controller="Spinner" asp-route-id="@ViewBag.PlayerId">Current Balance</a>:
-    <span>$@Model.Balance</span>
+     <a asp-action="LuckList" 
+        asp-controller="Spinner" 
+        asp-route-id=""> <!-- TODO: Put the Player Id information here-->
+        Current Balance</a>:<span>$@Model.Balance</span>
 </div>
 <h2 style="display:@ViewBag.Display">@Model.FirstName, You Win!</h2>
 <img src="/Images/LuckySpinCoins.jpg" class="animated bounce" alt="Coins" style="display:@ViewBag.Display" />

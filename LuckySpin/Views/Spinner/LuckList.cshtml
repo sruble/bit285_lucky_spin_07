@@ -1,14 +1,24 @@
 ﻿@model IEnumerable<LuckySpin.Models.Spin> 
-<!-- TODO: Change this to the ViewModel-->
+<!-- TODO: Change this to the LuckListViewModel-->
 @{
     Layout = "_Layout";
+    int counter = 0;
 }
 <h1>All Your Luck</h1>
 <table>
-    <thead><tr><th>Spin #</th><th>Result</th><th>Balance</th></tr></thead>
+    <thead><tr>
+        <th>Spin #</th>
+        <th>Result</th>
+        <th>Balance</th>
+    </tr></thead>
     <tbody>
-        @foreach( LuckySpin.Models.Spin spin in @Model ){
-            <tr><td> </td> <td> </td> <td> </td></tr>
-        }
+    @foreach( LuckySpin.Models.Spin spin in @Model ){
+        counter++;
+        <tr>
+            <td>@counter</td> 
+            <td>@spin.IsWinning?"Win":"Lose"</td> 
+            <td> </td>
+        </tr>
+    }
     </tbody>
 </table>
