@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+//TODO: add the Microsoft.EntityFrameworkCore
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace LuckySpin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-                return View();
+            return View();
         }
 
         [HttpPost]
@@ -43,7 +44,7 @@ namespace LuckySpin.Controllers
             _dbc.SaveChanges();
 
             /* **
-             * No longer needed - use an int instead
+             * No longer needed - we will use the player id instead
              *             
              SpinViewModel spinVM = new SpinViewModel()
             {
@@ -54,7 +55,8 @@ namespace LuckySpin.Controllers
             };
             */
 
-            //TODO: only pass the player.Id to the SpinIt action
+            //TODO: pass the player.Id to the SpinIt action
+            //      (remember, you have to pass it as an object property so use the 'new { }' syntax)
             return RedirectToAction("SpinIt");
         }
 
@@ -62,12 +64,13 @@ namespace LuckySpin.Controllers
          * SpinIt Action
          **/  
                
-         public IActionResult SpinIt() //TODO: change parameter to receive players Id
+         public IActionResult SpinIt() //TODO: add an int parameter to receive the id
         {
-            //TODO: Get the player with the given Id using the Players DbSet Find(Id) method
+            //TODO: Use the _dbc and the given id to get the current player object 
+            //       from Players, and Include her Spins (use Lamda expressions)
+            var currentPlayer = _dbc.Players; //This is incomplete
 
-
-            //TODO: Build a new SpinItViewModel object with data from the Player and spin
+            //TODO: Add more properties to this SpinItViewModel object with data from the currentPlayer
             SpinViewModel spinVM = new SpinViewModel()
             {
                 A = random.Next(1, 10),
@@ -78,17 +81,18 @@ namespace LuckySpin.Controllers
 
             spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
 
-            //Prepare the ViewBag
+            //Use the ViewBag to handle items just needed for display
             if(spinVM.IsWinning)
                 ViewBag.Display = "block";
             else
                 ViewBag.Display = "none";
-            //TODO Add an item called ViewBag.PlayerId that assigns the LuckList link a route_id in the View
+            //TODO Assign a ViewBag.PlayerId item used to assigns a link its route_id in SpinIt View
             //      (see the <a href> for "Current Balance" in the SpinIt.cshtml file)
 
 
-            //TODO CHANGE THIS to add the new Spin to the __Players__ spin list
-            _dbc.Spins.Add(new Spin() { IsWinning = spinVM.IsWinning });
+            //TODO Instead of adding a generic Spin, as shown below,
+            //     add the new Spin to the current player's Spins list
+            _dbc.Spins.Add(new Spin { IsWinning = spinVM.IsWinning });
             _dbc.SaveChanges();
 
             return View("SpinIt", spinVM);
@@ -100,10 +104,10 @@ namespace LuckySpin.Controllers
 
          public IActionResult LuckList(int id)
         {
-            //TODO: get all the spins for the given Player from the Database
+            //TODO: use the id to get the current player, including her Spins list
 
 
-            //TODO: wrap each spin as an IEnumerable and send to the View
+            //TODO: Send the player's Spins to the View
             return View();
         }
 

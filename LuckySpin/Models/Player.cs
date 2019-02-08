@@ -14,5 +14,9 @@ namespace LuckySpin.Models
         [Range(1,100, ErrorMessage ="Enter a balance between 1 and 100")]
         [DataType(DataType.Currency)]
         public decimal Balance { get; set; }
+
+        //TODO: Each Player has a set of Spins, add these as an ICollection<Spin>
+        //(Refresh your DB afterwards by deleting the LuckySpin database and re-run)
+ 
     }
 }
