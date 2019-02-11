@@ -68,15 +68,18 @@ namespace LuckySpin.Controllers
         {
             //TODO: Use the _dbc and the given id to get the current player object 
             //       from Players, and Include her Spins (use Lamda expressions)
-            var currentPlayer = _dbc.Players; //This is incomplete
+            var currentPlayer = _dbc.Players
+                              ; //The above is incomplete
 
-            //TODO: Add more properties to this SpinItViewModel object with data from the currentPlayer
+            //TODO: Add the properties to this SpinItViewModel object with data from the currentPlayer
             SpinViewModel spinVM = new SpinViewModel()
             {
                 A = random.Next(1, 10),
                 B = random.Next(1, 10),
-                C = random.Next(1, 10)
-
+                C = random.Next(1, 10),
+                //Luck = currentPlayer.Luck,
+                //Balance = currentPlayer.Balance,
+                //FirstName = currentPlayer.FirstName,
             };
 
             spinVM.IsWinning = (spinVM.A == spinVM.Luck || spinVM.B == spinVM.Luck || spinVM.C == spinVM.Luck);
@@ -90,8 +93,8 @@ namespace LuckySpin.Controllers
             //      (see the <a href> for "Current Balance" in the SpinIt.cshtml file)
 
 
-            //TODO Instead of adding a generic Spin, as shown below,
-            //     add the new Spin to the current player's Spins list
+            //TODO Compare DB records when adding a generic Spin, as shown below, 
+            //     with adding a new Spin to the current player's Spins list
             _dbc.Spins.Add(new Spin { IsWinning = spinVM.IsWinning });
             _dbc.SaveChanges();
 
