@@ -13,5 +13,7 @@ namespace LuckySpin.ViewModels
         public int B { get; set; }
         public int C { get; set; }
         public Boolean IsWinning { get; set; }
+
+
     }
 }
