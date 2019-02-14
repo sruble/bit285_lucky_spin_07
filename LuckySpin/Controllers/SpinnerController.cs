@@ -68,9 +68,8 @@ namespace LuckySpin.Controllers
                 ViewBag.Display = "block";
             else
                 ViewBag.Display = "none";
-            //TODO Assign a ViewBag.PlayerId item used to assigns a link its route_id in SpinIt View
-            //      (see the <a href> for "Current Balance" in the SpinIt.cshtml file)
 
+            ViewBag.PlayerId = idNum;
 
             _dbc.Spins.Add(new Spin { IsWinning = spinVM.IsWinning });
             _dbc.SaveChanges();
@@ -83,7 +82,7 @@ namespace LuckySpin.Controllers
          **/
          public IActionResult LuckList(int id)
         {
-            var Player = _dbc.Players.Include(p => p.Spins).Single(x => x.Id == id);
+            var Player = _dbc.Players.Include(x => x.Spins).Single(x => x.Id == id);
 
             return View(Player.Spins);
         }
