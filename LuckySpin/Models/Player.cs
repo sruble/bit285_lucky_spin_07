@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+
 namespace LuckySpin.Models
 {
     public class Player
@@ -17,6 +20,6 @@ namespace LuckySpin.Models
 
         //TODO: Each Player has a set of Spins, add these as an ICollection<Spin>
         //(Refresh your DB afterwards by deleting the LuckySpin database and re-run)
- 
+        public ICollection<Spin> Spins { get; set; }
     }
 }
